@@ -1,0 +1,13 @@
+#!/bin/bash
+# Screwmage v0.2 - script for embedding images into the HTML pages
+# 2013 - 2014 (c) Kurashov A.K. <mail@saahriktu.org>
+
+if [ "$#" -lt 1 ]; then
+        echo "usage: screwmage /path/to/image/file"
+        exit
+fi
+
+FILE_MIME_TYPE=$(file --mime-type $1 | sed 's/^.*:\ //')
+EMBEDDABLE_FORM=$(base64 --wrap=0 $1)
+
+echo "<img src=\"data:${FILE_MIME_TYPE};base64,%20${EMBEDDABLE_FORM}\" type=\"${FILE_MIME_TYPE}\" id=\"$1\" />"
